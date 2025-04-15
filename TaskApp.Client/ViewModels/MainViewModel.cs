@@ -34,16 +34,20 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void CreateTask()
+    private async Task CreateTask()
     {
         var dialog = new CreatePBTaskWindow();
 
         if (dialog.ShowDialog() == true)
-            LoadTasksCommand.Execute(null);
+        {
+            // TODO : here should be code to create a new task
+
+            await LoadTasksCommand.ExecuteAsync(null);
+        }
     }
 
     [RelayCommand]
-    private void UpdateTask()
+    private async Task UpdateTask()
     {
         if (SelectedTask == null)
         {
@@ -54,7 +58,11 @@ public partial class MainViewModel : ObservableObject
         var dialog = new CreatePBTaskWindow(SelectedTask);
 
         if (dialog.ShowDialog() == true)
-            LoadTasksCommand.Execute(null);
+        {
+            // TODO : here should be code to update a new task
+
+            await LoadTasksCommand.ExecuteAsync(null);
+        }
     }
 
     [RelayCommand]
@@ -67,6 +75,7 @@ public partial class MainViewModel : ObservableObject
         }
 
         await _client.DeletePBTaskAsync(SelectedTask.Id);
+        
         await LoadTasksCommand.ExecuteAsync(null);
     }
 }

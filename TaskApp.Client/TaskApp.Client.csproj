@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<OutputType>WinExe</OutputType>
+
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="Google.Protobuf" Version="3.27.5" />
+		<PackageReference Include="Grpc.Net.Client" Version="2.65.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.66.0">
+			<!--<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\TaskApp.Server\TaskApp.Server.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Protobuf Include="Protos\tasks.proto" GrpcServices="Client" />
+	</ItemGroup>
+</Project>
+
+

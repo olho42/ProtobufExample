@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package taskapp;
+
+option csharp_namespace = "TaskApp.Protos";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+// Enum for task status
+enum PBTaskStatus {
+  TODO = 0;
+  IN_PROGRESS = 1;
+  DONE = 2;
+}
+
+// Nested message for task metadata
+message PBTaskMetadata {
+  string created_by = 1;
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+}
+
+// Main task message
+message PBTask {
+  int32 id = 1;
+  string title = 2;
+  string description = 3;
+  PBTaskStatus status = 4;
+  PBTaskMetadata metadata = 5;
+  repeated string tags = 6;
+}
+
+// Request messages
+message PBTaskRequest {
+  int32 id = 1;
+}
+
+message CreatePBTaskRequest {
+  string title = 1;
+  string description = 2;
+  repeated string tags = 3;
+}
+
+message UpdatePBTaskRequest {
+  int32 id = 1;
+  optional string title = 2;
+  optional string description = 3;
+  optional PBTaskStatus status = 4;
+  repeated string tags = 5;
+}
+
+// Response messages
+message PBTaskResponse {
+  PBTask task = 1;
+}
+
+message PBTaskListResponse {
+  repeated PBTask tasks = 1;
+}
+
+message DeletePBTaskResponse {
+  bool success = 1;
+}
+
+// Service definition
+service PBTaskService {
+  rpc CreatePBTask (CreatePBTaskRequest) returns (PBTaskResponse);
+  rpc GetPBTask (PBTaskRequest) returns (PBTaskResponse);
+  rpc UpdatePBTask (UpdatePBTaskRequest) returns (PBTaskResponse);
+  rpc DeletePBTask (PBTaskRequest) returns (DeletePBTaskResponse);
+  rpc ListPBTasks (google.protobuf.Empty) returns (PBTaskListResponse);
+}
